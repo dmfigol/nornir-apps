@@ -1,0 +1,10 @@
+New York:
+  data:
+    ntp:
+      servers:
+        - 1.2.3.4
+Lisbon:
+  data:
+    ntp:
+      servers:
+        - 4.5.6.7

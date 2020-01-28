@@ -1,0 +1,10 @@
+platform: ios
+username: cisco
+password: cisco
+data:
+  snmp_community: secret
+connection_options:
+  netconf:
+    extras:
+        # allow_agent: False
+        hostkey_verify: False
