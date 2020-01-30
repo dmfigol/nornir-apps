@@ -3,8 +3,7 @@ from pathlib import Path
 
 from nornir import InitNornir
 from nornir.plugins.tasks.networking import netmiko_send_command
-from nornir.plugins.functions.text import print_result
-from nornir.core.filter import F
+# from nornir.core.filter import F
 
 
 COMMANDS = [
@@ -27,7 +26,7 @@ def gather_commands(task, commands):
 
 def main():
     with InitNornir(config_file="nr-config.yaml") as nr:
-        lisbon = nr.filter(F(groups__contains="Lisbon"))
+        # lisbon = nr.filter(F(groups__contains="Lisbon"))
         nr.run(gather_commands, commands=COMMANDS)
 
 

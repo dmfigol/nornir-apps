@@ -1,37 +1,44 @@
-from typing import Dict, Any, Optional, Union
+from typing import Any, Optional, Union
+from xml.dom.minidom import parseString
 
 from lxml import etree
 
 
 def extract_hostname_from_fqdn(fqdn: str) -> str:
     """Extracts hostname from fqdn-like string
-    
+
     For example, R1.cisco.com -> R1,  sw1 -> sw1"
     """
     return fqdn.split(".")[0]
 
 
-# def parse_show_cdp_neighbors(cli_output: str) -> Dict[str, Dict[str, str]]:
-#     """Parses `show cdp neighbors` and returns a dictionary of neighbors and connected interfaces"""
-#     result: Dict[str, Dict[str, str]] = {}
-#     for neighbor_output in NEIGHBOR_SPLIT_RE.split(cli_output):
-#         match = CDP_NEIGHBOR_RE.search(neighbor_output)
-#         if match:
-#             remote_fqdn = match.group("remote_fqdn")
-#             local_interface = normalize_interface_name(match.group("local_interface"))
-#             remote_interface = normalize_interface_name(match.group("remote_interface"))
-#             remote_hostname = extract_hostname_from_fqdn(remote_fqdn)
-#             result[local_interface] = {
-#                 "connected_device": {
-#                     "name": remote_hostname,
-#                     "port": remote_interface,
-#                 }
-#             }
-#     return dict(sorted(result.items()))
+def dict_to_xml(
+    data: Any, root: Union[None, str, etree._Element] = None, attr_marker: str = "_"
+) -> etree.Element:
+    """Converts Python dictionary with YANG data to lxml etree.Element object.
 
+    XML attributes must be represented in nested dictionary, which is accessed by the 
+    element name. Attribute keys must be prepended with underscore. Common use-cases:
+      * operation attribute. For example:
+        {"vrf": {"_operation": "replace"}} -> <vrf operation="replace"></vrf>
+      * changing default namespace. For example:
+        {"native": {"hostname": "R1", "_xmlns": "http://cisco.com/ns/yang/Cisco-IOS-XE-native"}} ->
+        <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native"><hostname>R1</hostname></native>
 
-def dict_to_xml(data: Any, root: Union[None, str, etree.Element] = None, attr_marker: str = '_') -> etree.Element:
-    def _dict_to_xml(data_: Any, parent: Optional[etree.Element] = None) -> None:
+    Empty XML tags (including self-closing tags) are represented with value `None`:
+       {"address-family": {"ipv4": None}} -> <address-family><ipv4/></address-family>
+
+    Namespaces with prefix:
+      1. They need to be defined under the top-level key "_namespaces" in the dictionary
+         in the form prefix:namespace. E.g.:
+         {"_namespaces": {"ianaift": "urn:ietf:params:xml:ns:yang:iana-if-type"}}
+      2. Use the form `element-name+prefix` to use it for a specific element. E.g.:
+         {"type+ianaift": "ianaift:ethernetCsmacd"} -> 
+         <type ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
+    """
+    namespaces = data.pop("_namespaces", {})
+
+    def _dict_to_xml(data_: Any, parent: Optional[etree._Element] = None) -> None:
         nonlocal root
         if not isinstance(data_, dict):
             raise ValueError("provided data must be a dictionary")
@@ -42,7 +49,12 @@ def dict_to_xml(data: Any, root: Union[None, str, etree.Element] = None, attr_ma
                 attr_name = key.lstrip(attr_marker)
                 parent.attrib[attr_name] = value
             else:
-                element = etree.Element(key)
+                if "+" in key:
+                    key, *_namespaces = key.split("+")
+                    nsmap = {ns: namespaces[ns] for ns in _namespaces}
+                else:
+                    nsmap = None
+                element = etree.Element(key, nsmap=nsmap)
                 if root is None:
                     root = element
 
@@ -57,11 +69,22 @@ def dict_to_xml(data: Any, root: Union[None, str, etree.Element] = None, attr_ma
                         parent.append(list_key)
                         _dict_to_xml(item, list_key)
                 else:
-                    if value is not None and not isinstance(value, str):
+                    if value is True or value is False:
+                        value = str(value).lower()
+                    elif value is not None and not isinstance(value, str):
                         value = str(value)
+
                     element.text = value
 
     if isinstance(root, str):
         root = etree.Element(root)
     _dict_to_xml(data, root)
     return root
+
+
+def prettify_xml(xml: Union[str, etree._Element]) -> str:
+    if isinstance(xml, etree._Element):
+        result = etree.tostring(xml, pretty_print=True).decode("utf-8")
+    else:
+        result = parseString(xml).toprettyxml()
+    return result
