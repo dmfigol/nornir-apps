@@ -1,5 +1,5 @@
 R1:
-  hostname: 198.18.1.101
+  hostname: 192.168.153.101
   groups:
     - New York
   data:
@@ -8,7 +8,7 @@ R1:
       - bgp
       - ospf
 R2:
-  hostname: 198.18.1.102
+  hostname: 192.168.153.102
   groups:
     - New York
   data:
@@ -17,7 +17,7 @@ R2:
       - bgp
       - ospf
 R3:
-  hostname: 198.18.1.103
+  hostname: 192.168.153.103
   groups:
     - New York
   data:
@@ -27,7 +27,7 @@ R3:
       - bgp
       - ospf
 R4:
-  hostname: 198.18.1.104
+  hostname: 192.168.153.104
   groups:
     - New York
   data:
@@ -36,7 +36,7 @@ R4:
       - bgp
       - ospf
 R5:
-  hostname: 198.18.1.105
+  hostname: 192.168.153.105
   groups:
     - New York
   data:
@@ -46,7 +46,7 @@ R5:
       - bgp
       - ospf
 R6:
-  hostname: 198.18.1.106
+  hostname: 192.168.153.106
   groups:
     - Lisbon
   data:
@@ -56,7 +56,7 @@ R6:
       - bgp
       - eigrp
 R7:
-  hostname: 198.18.1.107
+  hostname: 192.168.153.107
   groups:
     - Lisbon
   data:
@@ -65,7 +65,7 @@ R7:
       - edge
       - eigrp
 R8:
-  hostname: 198.18.1.108
+  hostname: 192.168.153.108
   groups:
     - Lisbon
   data:
@@ -73,7 +73,7 @@ R8:
       - isr4300
       - eigrp
 R9:
-  hostname: 198.18.1.109
+  hostname: 192.168.153.109
   groups:
     - Lisbon
   data:
@@ -81,7 +81,7 @@ R9:
       - isr4400
       - eigrp
 R10:
-  hostname: 198.18.1.110
+  hostname: 192.168.153.110
   groups:
     - Lisbon
   data:
