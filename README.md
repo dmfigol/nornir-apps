@@ -3,7 +3,7 @@
 
 To run these examples, you need an environment with IOS-XE routers. You can have any number, but at least two is recommended. You would also want to modify the inventory folder with the details for your environment (IP addresses, credentials).  
 
-On the control machine, you need to have Python 3.6+ installed (though it was tested on Python 3.7.5). Dependencies are managed with [poetry](https://python-poetry.org/). After cloning the repository, use `poetry install` to install dependencies. When you are running the scripts, you would want to prepend them with `poetry run`, for example: `poetry run python scripts/gather_commands.py`. Run scripts in the root of the repository. 
+On the control machine, you need to have Python 3.6+ installed (tested on Python 3.7.7). Dependencies are managed with [poetry](https://python-poetry.org/). After cloning the repository, use `poetry install` to install dependencies. When you are running the scripts, you would want to prepend them with `poetry run`, for example: `poetry run python scripts/gather_commands.py`. Run scripts in the root of the repository. 
 
 #### License
 It is MIT licensed. Feel free to do whatever you want with the code (including commercial use). No attribution is required.

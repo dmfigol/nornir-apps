@@ -65,6 +65,6 @@ settings.toml
 .ipynb_checkpoints/
 session-details.txt
 .vscode
-sandbox.py
+sandbox*.py
 live-coding-selection.txt
 timings.txt

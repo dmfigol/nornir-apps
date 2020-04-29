@@ -7,10 +7,10 @@ native:
         address-family:
           ipv4: null
           ipv6: null
-      - name: TEST
-        address-family:
-          ipv4: null
-          ipv6: null
+      # - name: CISCO
+      #   address-family:
+      #     ipv4: null
+      #     ipv6: null
   ip:
     access-list:
       _operation: replace

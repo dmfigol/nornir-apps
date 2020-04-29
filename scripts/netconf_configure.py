@@ -31,7 +31,7 @@ def edit_nc_config_from_yaml(task, config_path: str):
 
 
 def main():
-    with InitNornir(config_file="nr-config.yaml") as nr:
+    with InitNornir(config_file="nr-config-local.yaml") as nr:
         # results = nr.run(task=save_nc_get_config)
         # print_result(results)
 

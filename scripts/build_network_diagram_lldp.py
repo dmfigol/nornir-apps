@@ -106,7 +106,7 @@ def draw_and_save_topology(graph: nx.Graph, edge_labels: List[Dict[Tuple[str, st
 def main() -> None:
     start_time = time.time()
     links_q: Queue = Queue()
-    with InitNornir(config_file="nr-config.yaml") as nr:
+    with InitNornir(config_file="nr-config-local.yaml") as nr:
         nr.run(fetch_and_parse_lldp_neighbors, links_q=links_q)
 
     milestone = time.time()

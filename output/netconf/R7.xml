@@ -1,13 +1,18 @@
 <?xml version="1.0" ?>
 <data xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
 	<native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
-		<version>17.1</version>
+		<version>16.11</version>
 		<boot-start-marker/>
 		<boot-end-marker/>
+		<banner>
+			<motd>
+				<banner>^CJust testing MOTD on &gt;R7&lt;^C</banner>
+			</motd>
+		</banner>
 		<memory>
 			<free>
 				<low-watermark>
-					<processor>72107</processor>
+					<processor>80526</processor>
 				</low-watermark>
 			</free>
 		</memory>
@@ -16,9 +21,6 @@
 			<profile xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-call-home">
 				<profile-name>CiscoTAC-1</profile-name>
 				<active>true</active>
-				<destination>
-					<transport-method>http</transport-method>
-				</destination>
 			</profile>
 		</call-home>
 		<service>
@@ -40,19 +42,12 @@
 			<console xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-platform">
 				<output>auto</output>
 			</console>
-			<qfp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-platform">
-				<utilization>
-					<monitor>
-						<load>80</load>
-					</monitor>
-				</utilization>
-			</qfp>
 		</platform>
 		<hostname>R7</hostname>
 		<enable>
 			<secret>
-				<type>9</type>
-				<secret>$14$OAMZ$iwzC9dCmL0oxlE$WKag4YT6Hc9Qdl6KTFE0B4Hkon/CQBspj7fvs6/EnXc</secret>
+				<type>5</type>
+				<secret>$1$OAMZ$DDrEWyP3OXFg4CFnNFm9r/</secret>
 			</secret>
 		</enable>
 		<username>
@@ -60,7 +55,7 @@
 			<privilege>15</privilege>
 			<secret>
 				<encryption>9</encryption>
-				<secret>$9$boiefyAkAGgTzU$LvJU86AQb9Tui.wNJlkaCNrZraL6iaIUSDIiPlPipKY</secret>
+				<secret>$9$t6Y9Qr3nsObj4k$sJoLfaO/BS75px5weprYHTaKzHljcgefkeH6YikE7dQ</secret>
 			</secret>
 		</username>
 		<username>
@@ -87,14 +82,6 @@
 			<forward-protocol>
 				<protocol>nd</protocol>
 			</forward-protocol>
-			<multicast>
-				<route-limit xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-multicast">2147483647</route-limit>
-			</multicast>
-			<pim>
-				<autorp-container xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-multicast">
-					<autorp>false</autorp>
-				</autorp-container>
-			</pim>
 			<route>
 				<vrf>
 					<name>Mgmt-vrf</name>
@@ -102,7 +89,7 @@
 						<prefix>0.0.0.0</prefix>
 						<mask>0.0.0.0</mask>
 						<fwd-list>
-							<fwd>198.18.1.1</fwd>
+							<fwd>192.168.153.1</fwd>
 						</fwd-list>
 					</ip-route-interface-forwarding-list>
 				</vrf>
@@ -137,17 +124,7 @@
 				<secure-server>true</secure-server>
 			</http>
 		</ip>
-		<ipv6>
-			<mld xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-mld">
-				<ssm-map>
-					<query>
-						<dns-leaf>false</dns-leaf>
-					</query>
-				</ssm-map>
-			</mld>
-		</ipv6>
 		<cdp>
-			<run-enable xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-cdp">true</run-enable>
 			<run xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-cdp"/>
 		</cdp>
 		<interface>
@@ -159,16 +136,10 @@
 				<ip>
 					<address>
 						<primary>
-							<address>198.18.1.107</address>
+							<address>192.168.153.107</address>
 							<mask>255.255.255.0</mask>
 						</primary>
 					</address>
-					<igmp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-igmp">
-						<explicit-tracking>false</explicit-tracking>
-						<proxy-service>false</proxy-service>
-						<unidirectional-link>false</unidirectional-link>
-						<v3lite>false</v3lite>
-					</igmp>
 				</ip>
 				<mop>
 					<enabled>false</enabled>
@@ -191,12 +162,6 @@
 							<mask>255.255.255.252</mask>
 						</primary>
 					</address>
-					<igmp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-igmp">
-						<explicit-tracking>false</explicit-tracking>
-						<proxy-service>false</proxy-service>
-						<unidirectional-link>false</unidirectional-link>
-						<v3lite>false</v3lite>
-					</igmp>
 				</ip>
 				<mop>
 					<enabled>false</enabled>
@@ -204,11 +169,6 @@
 				</mop>
 				<cdp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-cdp">
 					<enable>true</enable>
-					<tlv>
-						<app/>
-						<server-location/>
-						<location/>
-					</tlv>
 				</cdp>
 				<negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
 					<auto>true</auto>
@@ -223,12 +183,6 @@
 							<mask>255.255.255.252</mask>
 						</primary>
 					</address>
-					<igmp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-igmp">
-						<explicit-tracking>false</explicit-tracking>
-						<proxy-service>false</proxy-service>
-						<unidirectional-link>false</unidirectional-link>
-						<v3lite>false</v3lite>
-					</igmp>
 				</ip>
 				<mop>
 					<enabled>false</enabled>
@@ -236,11 +190,6 @@
 				</mop>
 				<cdp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-cdp">
 					<enable>true</enable>
-					<tlv>
-						<app/>
-						<server-location/>
-						<location/>
-					</tlv>
 				</cdp>
 				<negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
 					<auto>true</auto>
@@ -249,33 +198,6 @@
 			<GigabitEthernet>
 				<name>4</name>
 				<shutdown/>
-				<ip>
-					<igmp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-igmp">
-						<explicit-tracking>false</explicit-tracking>
-						<proxy-service>false</proxy-service>
-						<unidirectional-link>false</unidirectional-link>
-						<v3lite>false</v3lite>
-					</igmp>
-				</ip>
-				<mop>
-					<enabled>false</enabled>
-					<sysid>false</sysid>
-				</mop>
-				<negotiation xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
-					<auto>true</auto>
-				</negotiation>
-			</GigabitEthernet>
-			<GigabitEthernet>
-				<name>5</name>
-				<shutdown/>
-				<ip>
-					<igmp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-igmp">
-						<explicit-tracking>false</explicit-tracking>
-						<proxy-service>false</proxy-service>
-						<unidirectional-link>false</unidirectional-link>
-						<v3lite>false</v3lite>
-					</igmp>
-				</ip>
 				<mop>
 					<enabled>false</enabled>
 					<sysid>false</sysid>
@@ -293,12 +215,6 @@
 							<mask>255.255.255.255</mask>
 						</primary>
 					</address>
-					<igmp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-igmp">
-						<explicit-tracking>false</explicit-tracking>
-						<proxy-service>false</proxy-service>
-						<unidirectional-link>false</unidirectional-link>
-						<v3lite>false</v3lite>
-					</igmp>
 				</ip>
 			</Loopback>
 		</interface>
@@ -320,14 +236,6 @@
 		<subscriber>
 			<templating/>
 		</subscriber>
-		<ethernet>
-			<cfm xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-ethernet">
-				<alarm>
-					<delay>2500</delay>
-					<reset>10000</reset>
-				</alarm>
-			</cfm>
-		</ethernet>
 		<crypto>
 			<pki xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-crypto">
 				<certificate>
@@ -339,7 +247,7 @@
 						</certificate>
 					</chain>
 					<chain>
-						<name>TP-self-signed-1839453215</name>
+						<name>TP-self-signed-1448579607</name>
 						<certificate>
 							<serial>01</serial>
 							<certtype>self-signed</certtype>
@@ -354,55 +262,40 @@
 					<revocation-check>crl</revocation-check>
 				</trustpoint>
 				<trustpoint>
-					<id>TP-self-signed-1839453215</id>
+					<id>TP-self-signed-1448579607</id>
 					<enrollment>
 						<selfsigned/>
 					</enrollment>
 					<revocation-check>none</revocation-check>
-					<subject-name>cn=IOS-Self-Signed-Certificate-1839453215</subject-name>
+					<subject-name>cn=IOS-Self-Signed-Certificate-1448579607</subject-name>
 				</trustpoint>
 			</pki>
 		</crypto>
 		<router>
-			<router-eigrp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-eigrp">
-				<eigrp>
-					<named-mode>
-						<name>CISCO-LIVE</name>
-						<address-family>
-							<ipv4>
-								<af-ipv4>
-									<unicast>unicast</unicast>
-									<autonomous-system>1111</autonomous-system>
-									<eigrp>
-										<router-id>7.7.7.7</router-id>
-									</eigrp>
-									<network>
-										<address>
-											<ipv4-address>198.51.100.0</ipv4-address>
-										</address>
-									</network>
-									<topology>
-										<topo-base>
-											<topology-base>base</topology-base>
-										</topo-base>
-									</topology>
-								</af-ipv4>
-							</ipv4>
-						</address-family>
-					</named-mode>
-				</eigrp>
-			</router-eigrp>
 			<eigrp xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-eigrp">
 				<id>CISCO-LIVE</id>
 				<address-family>
 					<type>ipv4</type>
+					<af-ip-list>
+						<unicast-multicast>unicast</unicast-multicast>
+						<autonomous-system>1111</autonomous-system>
+						<eigrp>
+							<router-id>7.7.7.7</router-id>
+						</eigrp>
+						<network>
+							<number>198.51.100.0</number>
+						</network>
+						<topology>
+							<base/>
+						</topology>
+					</af-ip-list>
 				</address-family>
 			</eigrp>
 		</router>
 		<license>
 			<udi>
 				<pid>CSR1000V</pid>
-				<sn>9OBQTPQP4GY</sn>
+				<sn>9L082M4KITN</sn>
 			</udi>
 		</license>
 		<line>
@@ -485,14 +378,6 @@
 			</utility>
 		</config>
 	</licensing>
-	<netconf-yang xmlns="http://cisco.com/yang/cisco-self-mgmt">
-		<cisco-ia xmlns="http://cisco.com/yang/cisco-ia">
-			<snmp-trap-control>
-				<global-forwarding>true</global-forwarding>
-			</snmp-trap-control>
-			<snmp-community-string>private</snmp-community-string>
-		</cisco-ia>
-	</netconf-yang>
 	<interfaces xmlns="http://openconfig.net/yang/interfaces">
 		<interface>
 			<name>GigabitEthernet1</name>
@@ -511,9 +396,9 @@
 					<ipv4 xmlns="http://openconfig.net/yang/interfaces/ip">
 						<addresses>
 							<address>
-								<ip>198.18.1.107</ip>
+								<ip>192.168.153.107</ip>
 								<config>
-									<ip>198.18.1.107</ip>
+									<ip>192.168.153.107</ip>
 									<prefix-length>24</prefix-length>
 								</config>
 							</address>
@@ -528,9 +413,8 @@
 			</subinterfaces>
 			<ethernet xmlns="http://openconfig.net/yang/interfaces/ethernet">
 				<config>
-					<mac-address>0c:8f:f8:02:5f:00</mac-address>
+					<mac-address>52:54:00:11:ac:02</mac-address>
 					<auto-negotiate>true</auto-negotiate>
-					<enable-flow-control>true</enable-flow-control>
 				</config>
 			</ethernet>
 		</interface>
@@ -568,9 +452,8 @@
 			</subinterfaces>
 			<ethernet xmlns="http://openconfig.net/yang/interfaces/ethernet">
 				<config>
-					<mac-address>0c:8f:f8:02:5f:01</mac-address>
+					<mac-address>52:54:00:12:3c:f1</mac-address>
 					<auto-negotiate>true</auto-negotiate>
-					<enable-flow-control>true</enable-flow-control>
 				</config>
 			</ethernet>
 		</interface>
@@ -608,9 +491,8 @@
 			</subinterfaces>
 			<ethernet xmlns="http://openconfig.net/yang/interfaces/ethernet">
 				<config>
-					<mac-address>0c:8f:f8:02:5f:02</mac-address>
+					<mac-address>52:54:00:1f:da:3a</mac-address>
 					<auto-negotiate>true</auto-negotiate>
-					<enable-flow-control>true</enable-flow-control>
 				</config>
 			</ethernet>
 		</interface>
@@ -637,38 +519,8 @@
 			</subinterfaces>
 			<ethernet xmlns="http://openconfig.net/yang/interfaces/ethernet">
 				<config>
-					<mac-address>0c:8f:f8:02:5f:03</mac-address>
+					<mac-address>52:54:00:05:39:36</mac-address>
 					<auto-negotiate>true</auto-negotiate>
-					<enable-flow-control>true</enable-flow-control>
-				</config>
-			</ethernet>
-		</interface>
-		<interface>
-			<name>GigabitEthernet5</name>
-			<config>
-				<name>GigabitEthernet5</name>
-				<type xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
-				<enabled>false</enabled>
-			</config>
-			<subinterfaces>
-				<subinterface>
-					<index>0</index>
-					<config>
-						<index>0</index>
-						<enabled>false</enabled>
-					</config>
-					<ipv6 xmlns="http://openconfig.net/yang/interfaces/ip">
-						<config>
-							<enabled>false</enabled>
-						</config>
-					</ipv6>
-				</subinterface>
-			</subinterfaces>
-			<ethernet xmlns="http://openconfig.net/yang/interfaces/ethernet">
-				<config>
-					<mac-address>0c:8f:f8:02:5f:04</mac-address>
-					<auto-negotiate>true</auto-negotiate>
-					<enable-flow-control>true</enable-flow-control>
 				</config>
 			</ethernet>
 		</interface>
@@ -736,13 +588,6 @@
 				<name>GigabitEthernet4</name>
 				<config>
 					<name>GigabitEthernet4</name>
-					<enabled>true</enabled>
-				</config>
-			</interface>
-			<interface>
-				<name>GigabitEthernet5</name>
-				<config>
-					<name>GigabitEthernet5</name>
 					<enabled>true</enabled>
 				</config>
 			</interface>
@@ -816,10 +661,10 @@
 							</config>
 							<next-hops>
 								<next-hop>
-									<index>198.18.1.1</index>
+									<index>192.168.153.1</index>
 									<config>
-										<index>198.18.1.1</index>
-										<next-hop>198.18.1.1</next-hop>
+										<index>192.168.153.1</index>
+										<next-hop>192.168.153.1</next-hop>
 									</config>
 								</next-hop>
 							</next-hops>
@@ -904,7 +749,7 @@
 			<enabled>true</enabled>
 			<ipv4 xmlns="urn:ietf:params:xml:ns:yang:ietf-ip">
 				<address>
-					<ip>198.18.1.107</ip>
+					<ip>192.168.153.107</ip>
 					<netmask>255.255.255.0</netmask>
 				</address>
 			</ipv4>
@@ -936,13 +781,6 @@
 		</interface>
 		<interface>
 			<name>GigabitEthernet4</name>
-			<type xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
-			<enabled>false</enabled>
-			<ipv4 xmlns="urn:ietf:params:xml:ns:yang:ietf-ip"/>
-			<ipv6 xmlns="urn:ietf:params:xml:ns:yang:ietf-ip"/>
-		</interface>
-		<interface>
-			<name>GigabitEthernet5</name>
 			<type xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
 			<enabled>false</enabled>
 			<ipv4 xmlns="urn:ietf:params:xml:ns:yang:ietf-ip"/>
@@ -993,7 +831,7 @@
 							<route>
 								<destination-prefix>0.0.0.0/0</destination-prefix>
 								<next-hop>
-									<next-hop-address>198.18.1.1</next-hop-address>
+									<next-hop-address>192.168.153.1</next-hop-address>
 								</next-hop>
 							</route>
 						</ipv4>

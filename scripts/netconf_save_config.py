@@ -10,7 +10,7 @@ def save_nc_get_config(task):
 
 
 def main():
-    with InitNornir(config_file="nr-config.yaml") as nr:
+    with InitNornir(config_file="nr-config-local.yaml") as nr:
         results = nr.run(task=save_nc_get_config)
         # print_result(results)
 
