@@ -1,0 +1,14 @@
+---
+core:
+  num_workers: 15
+  raise_on_error: False
+
+logging:
+  enabled: True
+
+inventory:
+  plugin: nornir.plugins.inventory.simple.SimpleInventory
+  options:
+    host_file: "inventories/simple-topology/hosts.yaml"
+    group_file: "inventories/simple-topology/groups.yaml"
+    defaults_file: "inventories/simple-topology/defaults.yaml"

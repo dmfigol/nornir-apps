@@ -4,13 +4,11 @@ import time
 from queue import Queue
 from typing import TYPE_CHECKING, Dict, Any, Tuple, List, Set
 
-
 import colorama
-import urllib3
+from colorama import Fore
+import httpx
 import matplotlib.pyplot as plt
 import networkx as nx
-import requests
-from colorama import Fore
 from nornir import InitNornir
 
 from nr_app import constants
@@ -32,7 +30,7 @@ def fetch_and_parse_lldp_neighbors(task, links_q: Queue):
 def fetch_lldp_neighbors(host: "Host"):
     url = constants.RESTCONF_ROOT + constants.OPENCONFIG_LLDP_NEIGHBORS_ENDPOINT
     url = url.format(host=host.hostname)
-    response = requests.get(
+    response = httpx.get(
         url,
         headers=constants.RESTCONF_HEADERS,
         auth=(host.username, host.password),
@@ -69,7 +67,9 @@ def parse_lldp_neighbors(host, data: Dict[str, Any], links_q: Queue) -> None:
         host_interfaces[interface.name] = interface
 
 
-def build_graph(nodes: List[str], links: Set[Link]) -> Tuple[nx.Graph, List[Dict[Tuple[str, str], str]]]:
+def build_graph(
+    nodes: List[str], links: Set[Link]
+) -> Tuple[nx.Graph, List[Dict[Tuple[str, str], str]]]:
     edge_labels: List[Dict[Tuple[str, str], str]] = [{}, {}]
     graph = nx.Graph()
     graph.add_nodes_from(nodes)
@@ -79,9 +79,8 @@ def build_graph(nodes: List[str], links: Set[Link]) -> Tuple[nx.Graph, List[Dict
             continue
 
         edge: Tuple[str, str] = tuple(
-            interface.device_name
-            for interface in link.interfaces
-        )
+            interface.device_name for interface in link.interfaces
+        )  # type: ignore
         for i, interface in enumerate(link.interfaces):
             edge_labels[i][edge] = interface.short_name
         graph.add_edge(*edge)
@@ -89,12 +88,14 @@ def build_graph(nodes: List[str], links: Set[Link]) -> Tuple[nx.Graph, List[Dict
     return graph, edge_labels
 
 
-def draw_and_save_topology(graph: nx.Graph, edge_labels: List[Dict[Tuple[str, str], str]]) -> None:
+def draw_and_save_topology(
+    graph: nx.Graph, edge_labels: List[Dict[Tuple[str, str], str]]
+) -> None:
     # plt.figure(1, figsize=(12, 12))
     fig, ax = plt.subplots(figsize=(14, 9))
     fig.tight_layout()
     pos = nx.spring_layout(graph)
-    nx.draw_networkx(graph, pos, node_size=1500, node_color='orange')
+    nx.draw_networkx(graph, pos, node_size=1500, node_color="orange")
     nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels[0], label_pos=0.8)
     nx.draw_networkx_edge_labels(graph, pos, edge_labels=edge_labels[1], label_pos=0.2)
     filename = "output/topology.png"
@@ -133,6 +134,6 @@ def main() -> None:
 if __name__ == "__main__":
     # matplotlib.use("TkAgg")
     logging.config.dictConfig(constants.LOGGING_DICT)
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     colorama.init()
     main()

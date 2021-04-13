@@ -1,0 +1,58 @@
+PC1:
+  hostname: 192.168.153.201
+  groups:
+    - hosts
+PC2:
+  hostname: 192.168.153.202
+  groups:
+    - hosts
+PC3:
+  hostname: 192.168.153.203
+  groups:
+    - hosts
+PC4:
+  hostname: 192.168.153.204
+  groups:
+    - hosts
+ASW1:
+  hostname: 192.168.153.101
+  groups:
+    - iosv
+  data:
+    tags:
+      - access
+ASW2:
+  hostname: 192.168.153.102
+  groups:
+    - iosv
+  data:
+    tags:
+      - access
+ASW3:
+  hostname: 192.168.153.103
+  groups:
+    - cisco-nexus
+  data:
+    tags:
+      - access
+DSW1:
+  hostname: 192.168.153.104
+  groups:
+    - iosv
+  data:
+    tags:
+      - distribution
+CORE1:
+  hostname: 192.168.153.105
+  groups:
+    - csr
+  data:
+    tags:
+      - core
+EDGE1:
+  hostname: 192.168.153.106
+  groups:
+    - csr
+  data:
+    tags:
+      - edge

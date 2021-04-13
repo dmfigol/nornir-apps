@@ -1,0 +1,13 @@
+hosts:
+  platform: linux
+cisco-nexus:
+  platform: nx_os
+iosv:
+  platform: cisco_ios
+  connection_options:
+    scrapli:
+      platform: cisco_iosxe
+csr:
+  connection_options:
+    scrapli:
+      platform: cisco_iosxe

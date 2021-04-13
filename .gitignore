@@ -68,3 +68,5 @@ session-details.txt
 sandbox*.py
 live-coding-selection.txt
 timings.txt
+output/cli
+output/netconf

@@ -60,11 +60,13 @@ def parse_cdp_neighbors(task):
 
 def build_graph(hosts: List[Host]) -> Tuple[nx.Graph, List[Dict[Tuple[str, str], str]]]:
     edge_labels: List[Dict[Tuple[str, str], str]] = [{}, {}]
-    links = set([
-        interface.link_from_neighbors()
-        for host in hosts
-        for interface in host.data["interfaces"].values()
-    ])
+    links = set(
+        [
+            interface.link_from_neighbors()
+            for host in hosts
+            for interface in host.data["interfaces"].values()
+        ]
+    )
     graph = nx.Graph()
     graph.add_nodes_from([host.name for host in hosts])
 
@@ -73,11 +75,10 @@ def build_graph(hosts: List[Host]) -> Tuple[nx.Graph, List[Dict[Tuple[str, str],
             continue
 
         edge: Tuple[str, str] = tuple(
-            interface.device_name
-            for interface in link.interfaces
+            interface.device_name for interface in link.interfaces
         )
         for i, interface in enumerate(link.interfaces):
             edge_labels[i][edge] = interface.short_name
         graph.add_edge(*edge)
     logger.info("The network graph was built")
-    return graph, edge_labels   
+    return graph, edge_labels

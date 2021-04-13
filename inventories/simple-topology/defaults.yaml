@@ -1,0 +1,15 @@
+# platform: ios
+username: cisco
+password: cisco
+connection_options:
+  napalm:
+    extras:
+        # allow_agent: False
+        hostkey_verify: False
+  scrapli:
+    # platform: cisco_iosxe
+    port: 22
+    extras:
+      transport: ssh2
+      ssh_config_file: False
+      auth_strict_key: False

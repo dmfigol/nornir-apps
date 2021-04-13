@@ -2,6 +2,9 @@ from typing import Any, Optional, Union
 from xml.dom.minidom import parseString
 
 from lxml import etree
+from ruamel.yaml import YAML
+
+from nr_app.constants import NORMALIZED_INTERFACES, INTERFACE_NAME_RE
 
 
 def extract_hostname_from_fqdn(fqdn: str) -> str:
@@ -12,12 +15,38 @@ def extract_hostname_from_fqdn(fqdn: str) -> str:
     return fqdn.split(".")[0]
 
 
+def normalize_interface_type(interface_type: str) -> str:
+    """Normalizes interface type
+    For example, G is converted to GigabitEthernet, Te is converted to TenGigabitEthernet
+    """
+    int_type = interface_type.strip().lower()
+    for norm_int_type in NORMALIZED_INTERFACES:
+        if norm_int_type.lower().startswith(int_type):
+            return norm_int_type
+    return int_type
+
+
+def normalize_interface_name(interface_name: str) -> str:
+    """Normalizes interface name
+
+    For example, Gi0/1 is converted to GigabitEthernet1,
+    Te1/1 is converted to TenGigabitEthernet1/1
+    """
+    match = INTERFACE_NAME_RE.search(interface_name)
+    if match:
+        int_type = match.group("interface_type")
+        normalized_int_type = normalize_interface_type(int_type)
+        int_num = match.group("interface_num")
+        return normalized_int_type + int_num
+    raise ValueError(f"Does not recognize {interface_name} as an interface name")
+
+
 def dict_to_xml(
     data: Any, root: Union[None, str, etree._Element] = None, attr_marker: str = "_"
 ) -> etree.Element:
     """Converts Python dictionary with YANG data to lxml etree.Element object.
 
-    XML attributes must be represented in nested dictionary, which is accessed by the 
+    XML attributes must be represented in nested dictionary, which is accessed by the
     element name. Attribute keys must be prepended with underscore. Common use-cases:
       * operation attribute. For example:
         {"vrf": {"_operation": "replace"}} -> <vrf operation="replace"></vrf>
@@ -33,7 +62,7 @@ def dict_to_xml(
          in the form prefix:namespace. E.g.:
          {"_namespaces": {"ianaift": "urn:ietf:params:xml:ns:yang:iana-if-type"}}
       2. Use the form `element-name+prefix` to use it for a specific element. E.g.:
-         {"type+ianaift": "ianaift:ethernetCsmacd"} -> 
+         {"type+ianaift": "ianaift:ethernetCsmacd"} ->
          <type ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ethernetCsmacd</type>
     """
     namespaces = data.pop("_namespaces", {})
@@ -80,6 +109,16 @@ def dict_to_xml(
         root = etree.Element(root)
     _dict_to_xml(data, root)
     return root
+
+
+def yaml_to_xml_str(
+    yaml_content: str, root: Union[None, str, etree._Element] = None
+) -> str:
+    yml = YAML(typ="safe")
+    data = yml.load(yaml_content)
+    _xml = dict_to_xml(data=data, root=root)
+    result = etree.tostring(_xml).decode("utf-8")
+    return result
 
 
 def prettify_xml(xml: Union[str, etree._Element]) -> str:

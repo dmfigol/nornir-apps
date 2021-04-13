@@ -1,14 +1,15 @@
 ---
-core:
-  num_workers: 10
-  raise_on_error: False
+runners:
+  plugin: threaded
+  options:
+    num_workers: 10
 
 logging:
   enabled: False
 
 inventory:
-  plugin: nornir.plugins.inventory.simple.SimpleInventory
+  plugin: SimpleInventory
   options:
-    host_file: "inventory-10-csr-local/hosts.yaml"
-    group_file: "inventory-10-csr-local/groups.yaml"
-    defaults_file: "inventory-10-csr-local/defaults.yaml"
+    host_file: "inventories/inventory-10-csr-local/hosts.yaml"
+    group_file: "inventories/inventory-10-csr-local/groups.yaml"
+    defaults_file: "inventories/inventory-10-csr-local/defaults.yaml"

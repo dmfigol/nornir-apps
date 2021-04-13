@@ -1,0 +1,22 @@
+username: cisco
+password: cisco
+platform: cisco_ios
+connection_options:
+  netconf:
+    extras:
+      # allow_agent: False
+      hostkey_verify: False
+  scrapli:
+    platform: cisco_iosxe
+    extras:
+      transport: ssh2
+      ssh_config_file: True
+      auth_strict_key: False
+  scrapli_netconf:
+    platform: cisco_iosxe
+    extras:
+      transport: ssh2
+      ssh_config_file: True
+      auth_strict_key: False
+  napalm:
+    platform: ios
